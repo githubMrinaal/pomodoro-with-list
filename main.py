@@ -1,6 +1,7 @@
 from tkinter import *
 import math
 import random
+from playsound import playsound
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -15,6 +16,7 @@ timer_new = None
 rows = 4
 ROW_COLOR = "#B0C5A4"
 ROW_COLOR2 = "#EBC49F"
+list_items = []
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
@@ -25,6 +27,9 @@ def reset_timer():
     check.config(text="")
     global reps 
     reps = 0
+    global list_items
+    for items in list_items:
+        items.destroy()
      
 
 
@@ -43,6 +48,7 @@ def start_timer():
     elif reps%2==0:
         count_down(short_break_sec)
         timer.config(text="SHORT BREAK",fg=PINK)
+        play()
     else:
         count_down(work_sec)
         timer.config(text="WORK",fg=GREEN)
@@ -71,14 +77,20 @@ def count_down(count):
 
 def items():
     global rows
+    global list_items
     item = task_input.get()
     new_label = Label(text=item)
     new_label.grid(column=1,row=rows)
     rows+=1
+    list_items.append(new_label)
     if rows % 2 == 0:
         new_label.config(bg=ROW_COLOR)
     else:
         new_label.config(bg=ROW_COLOR2)
+
+def play():
+    playsound("d:/Python 100 days/pomodoro/WhatsApp Audio 2024-03-06 at 12.34.40_715d62de (online-audio-converter.com).mp3")
+
 
 
 # ---------------------------- UI SETUP ------------------------------- #
